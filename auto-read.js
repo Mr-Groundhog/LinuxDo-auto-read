@@ -49,11 +49,13 @@
             -webkit-backdrop-filter: blur(12px);
             transition: opacity 0.3s, transform 0.3s;
         }
+
         #auto-scroll-panel.minimized {
             padding: 8px 12px;
             min-width: auto;
         }
         #auto-scroll-panel.minimized .panel-body { display: none; }
+        #auto-scroll-panel.minimized .panel-header { margin-bottom: 0; }
 
         #auto-scroll-panel .panel-header {
             display: flex;
@@ -62,7 +64,6 @@
             margin-bottom: 12px;
             cursor: move;
         }
-        #auto-scroll-panel.minimized .panel-header { margin-bottom: 0; }
 
         #auto-scroll-panel .panel-title {
             font-weight: 600;
@@ -222,7 +223,7 @@
         <div class="panel-header">
             <div class="panel-title">
                 <span class="dot" id="statusDot"></span>
-                <span>自动滚动</span>
+                <span>阅读助手</span>
             </div>
             <button class="btn-minimize" id="btnMinimize" title="最小化">−</button>
         </div>
@@ -267,6 +268,8 @@
         </div>
     `;
     document.body.appendChild(panel);
+
+
 
     // DOM 引用
     const btnToggle    = document.getElementById('btnToggle');
@@ -322,7 +325,7 @@
         document.removeEventListener('touchend', onUp);
     }
 
-    // ====== 最小化 ======
+    // ====== 最小化按钮 ======
     btnMinimize.addEventListener('click', () => {
         panel.classList.toggle('minimized');
         btnMinimize.textContent = panel.classList.contains('minimized') ? '+' : '−';
