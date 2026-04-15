@@ -20,6 +20,7 @@
 
     let timer = null;
     let isRunning = false;
+    let isLikeEnabled = false; // 点赞功能开关
     let downCounter = 0;    // 向下滚动计数器
     let startTime = null;   // 开始执行时间
     let likeCount = 0;      // 滚动计数，用于每5次触发一次点赞
@@ -174,6 +175,43 @@
             color: #484f58;
         }
         .status-text.active { color: #3fb950; }
+
+        .toggle-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+        }
+        .toggle-row label {
+            color: #8b949e;
+            font-size: 12px;
+        }
+        .toggle-switch {
+            position: relative;
+            width: 40px;
+            height: 22px;
+            background: rgba(110,118,129,0.3);
+            border-radius: 11px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .toggle-switch.active {
+            background: #238636;
+        }
+        .toggle-switch::after {
+            content: '';
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 16px;
+            height: 16px;
+            background: #fff;
+            border-radius: 50%;
+            transition: transform 0.2s;
+        }
+        .toggle-switch.active::after {
+            transform: translateX(18px);
+        }
     `;
     document.head.appendChild(style);
 
@@ -191,6 +229,17 @@
         <div class="panel-body">
             <button class="btn btn-start" id="btnToggle">▶ 开始</button>
             <button class="btn btn-direction" id="btnDirection">⬇ 方向：向下</button>
+
+            <div class="toggle-row">
+                <label>自动点赞</label>
+                <div class="toggle-switch" id="likeToggle"></div>
+            </div>
+
+            <div class="setting-row" id="likeIntervalRow" style="display: none;">
+                <label>滚动</label>
+                <input type="number" id="likeInterval" min="1" max="50" value="5" style="width:50px;background:rgba(110,118,129,0.2);border:1px solid rgba(110,118,129,0.3);border-radius:4px;color:#58a6ff;text-align:center;padding:2px 4px;">
+                <span style="color:#8b949e;font-size:12px;">次点赞</span>
+            </div>
 
             <div class="setting-row">
                 <label>间隔</label>
@@ -231,6 +280,10 @@
     const valRatio      = document.getElementById('valRatio');
     const likedCountEl  = document.getElementById('likedCount');
     const runTimeEl     = document.getElementById('runTime');
+    const likeToggle    = document.getElementById('likeToggle');
+    const likeIntervalRow = document.getElementById('likeIntervalRow');
+    const likeIntervalInput = document.getElementById('likeInterval');
+    let likeInterval = 5;
 
     // ====== 拖拽逻辑 ======
     let isDragging = false, startX, startY, origX, origY;
@@ -381,11 +434,13 @@
             behavior: 'smooth'
         });
 
-        // 每滚动5次尝试点赞一次
-        likeCount++;
-        if (likeCount >= 5) {
-            doLike();
-            likeCount = 0;
+        // 每滚动N次尝试点赞一次（仅在点赞开关开启时）
+        if (isLikeEnabled) {
+            likeCount++;
+            if (likeCount >= likeInterval) {
+                doLike();
+                likeCount = 0;
+            }
         }
 
         return isSpecialUp;
@@ -451,6 +506,26 @@
         btnDirection.textContent = scrollDirection === 'down'
             ? '⬇ 方向：向下'
             : '⬆ 方向：向上';
+    });
+
+    likeToggle.addEventListener('click', () => {
+        isLikeEnabled = !isLikeEnabled;
+        likeToggle.classList.toggle('active', isLikeEnabled);
+        likeIntervalRow.style.display = isLikeEnabled ? 'flex' : 'none';
+        likeCount = 0;
+        if (isLikeEnabled) {
+            statusText.textContent = '已开启自动点赞';
+            statusText.style.color = '#3fb950';
+        } else {
+            statusText.textContent = '已关闭自动点赞';
+            statusText.style.color = '#8b949e';
+        }
+    });
+
+    likeIntervalInput.addEventListener('input', () => {
+        likeInterval = Math.max(1, Math.min(50, parseInt(likeIntervalInput.value) || 5));
+        likeIntervalInput.value = likeInterval;
+        likeCount = 0;
     });
 
     rangeInterval.addEventListener('input', () => {
