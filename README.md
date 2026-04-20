@@ -135,6 +135,7 @@ let scrollDirection = 'down';     // 滚动方向
    <img alt="Star History Chart" src="https://api.star-history.com/chart?repos=Mr-Groundhog/LinuxDo-auto-read&type=date&legend=top-left" />
  </picture>
 </a>
+
 ## 🎉 许可证
 
 本项目为个人学习使用脚本。
