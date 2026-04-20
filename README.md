@@ -126,6 +126,10 @@ let scrollDirection = 'down';     // 滚动方向
 4. 阅读完成检测基于特定的页面结构，可能需要调整
 5. 脚本会在页面URL变化时自动重置
 
+## Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=Mr-Groundhog/LinuxDo-auto-read&type=Date)](https://star-history.com/#Mr-Groundhog/LinuxDo-auto-read&Date)
+
 ## 🎉 许可证
 
 本项目为个人学习使用脚本。
