@@ -128,13 +128,7 @@ let scrollDirection = 'down';     // 滚动方向
 
 ## Star History
 
-<a href="https://www.star-history.com/?repos=Mr-Groundhog%2FLinuxDo-auto-read&type=date&legend=top-left">
- <picture>
-   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/chart?repos=Mr-Groundhog/LinuxDo-auto-read&type=date&theme=dark&legend=top-left" />
-   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/chart?repos=Mr-Groundhog/LinuxDo-auto-read&type=date&legend=top-left" />
-   <img alt="Star History Chart" src="https://api.star-history.com/chart?repos=Mr-Groundhog/LinuxDo-auto-read&type=date&legend=top-left" />
- </picture>
-</a>
+[![Star History Chart](https://api.star-history.com/svg?repos=Mr-Groundhog/LinuxDo-auto-read&type=Date)](https://star-history.com/#Mr-Groundhog/LinuxDo-auto-read&Date)
 
 ## 🎉 许可证
 
